@@ -277,7 +277,6 @@ class GameLayout(FloatLayout):
         self.goals[player] += 1
 
     def stop(self):
-        print(self.goals)
         for i in range(2):
             if self.goals[i] == goals_count:
                 self.win(i)
