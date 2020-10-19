@@ -101,9 +101,6 @@ def node_collision(node, ball, v):
         -(b * c) / (a * a + b * b)
     ]
 
-    #print(node, l)
-    #print(distance(node, l))
-
     if abs(distance([0, 0], l) - dist) < eps:
         return [l[0] + node[0], l[1] + node[1]]
     elif distance([0, 0], l) < dist:

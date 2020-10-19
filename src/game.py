@@ -102,7 +102,6 @@ class Ball:
                         if elem.inside:
                             closest_collision = elem
                             collides = True
-                            print('inside')
                             break
                     except AttributeError:
                         continue
@@ -144,6 +143,7 @@ class Ball:
                 ) / self.v.speed()
 
                 time_left -= closest_collision_time
+                self.v.y -= g * closest_collision_time
         return (False, False)
 
     def add_collision(self, *args):
@@ -194,7 +194,7 @@ class Ball:
             )
             self.v.normalize()
             self.v *= speed
-            self.v -= half.vector * 2
+            self.v += half.vector
 
         self.v *= spring_ability
         return (False, False)
@@ -297,7 +297,7 @@ class GameLayout(FloatLayout):
         self.canvas.clear()
         self.clear_widgets()
 
-        side = 'left' if player == 0 else 'right'
+        side = 'left' if player == 1 else 'right'
         winner = Label(
             text = '{0} player wins!'.format(side),
             pos = (0, window_height / 4),
@@ -310,8 +310,8 @@ class GameLayout(FloatLayout):
         restart_button = Button(
             text = 'restart',
             font_size = font_size,
-            on_release = self.new_game,
             on_press = set_color,
+            on_release = self.new_game,
             pos_hint = {'x': 0.25, 'y': 0.4},
             size_hint = (0.5, 0.25),
             background_color = [0, 0, 0, 1]
@@ -332,8 +332,10 @@ class GameLayout(FloatLayout):
         self.add_widget(exit_button)
 
     def update(self):
+        cur_time = time()
+
         stop_needed, restart_needed = \
-            self.ball.update(time() - self.last_updated)
+            self.ball.update(cur_time - self.last_updated)
 
         if stop_needed:
             return (stop_needed, restart_needed)
@@ -343,7 +345,7 @@ class GameLayout(FloatLayout):
                 begin = self.halves[i].node.last_pos,
                 end = self.halves[i].node.pos
             )
-        self.last_updated = time()
+        self.last_updated = cur_time
 
         for i in range(2):
             self.halves[i].node.last_pos = self.halves[i].node.pos
@@ -351,7 +353,7 @@ class GameLayout(FloatLayout):
         return (False, False)
 
     def restart(self):
-        sleep(2)
+        sleep(restart_waiting)
         self.define_halves()
         for i in range(2):
             self.add_widget(self.halves[i])

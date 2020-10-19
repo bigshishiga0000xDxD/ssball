@@ -31,7 +31,6 @@ class Half(Widget):
         if abs(self.node.pos[0] - touch.pos[0]) <= nodesize \
                 and abs(self.node.pos[1] - touch.pos[1]) <= nodesize:
             touch.grab(self)
-            return True
 
     def on_touch_up(self, touch):
         if self.parent is None:
