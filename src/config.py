@@ -25,7 +25,7 @@ node_weight = 1
 ball_weight = 1
 
 # number of goals that are needed to score to win the game
-goals_count = 1
+goals_count = 2
 
 # labels font size
 font_size = window_width * window_height / 16000

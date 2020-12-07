@@ -297,7 +297,7 @@ class GameLayout(FloatLayout):
         self.clear_widgets()
 
         side = 'left' if player == 1 else 'right'
-        winner = Label(
+        self.winner = Label(
             text = '{0} player wins!'.format(side),
             pos = (0, window_height / 4),
             font_size = font_size
@@ -306,7 +306,7 @@ class GameLayout(FloatLayout):
         def set_color(button):
             button.background_color = [0.1, 0.1, 0.1, 1]
 
-        restart_button = Button(
+        self.restart_button = Button(
             text = 'restart',
             font_size = font_size,
             on_press = set_color,
@@ -316,7 +316,7 @@ class GameLayout(FloatLayout):
             background_color = [0, 0, 0, 1]
         )
 
-        exit_button = Button(
+        self.exit_button = Button(
             text = 'exit',
             font_size = font_size,
             on_press = set_color,
@@ -326,9 +326,9 @@ class GameLayout(FloatLayout):
             background_color = [0, 0, 0, 1]
         )
 
-        self.add_widget(winner)
-        self.add_widget(restart_button)
-        self.add_widget(exit_button)
+        self.add_widget(self.winner)
+        self.add_widget(self.restart_button)
+        self.add_widget(self.exit_button)
 
     def update(self):
         cur_time = time()
@@ -363,6 +363,15 @@ class GameLayout(FloatLayout):
         self.start_thread()
 
     def new_game(self, button = None):
+        try:
+            self.remove_widget(self.restart_button)
+            self.remove_widget(self.exit_button)
+            self.remove_widget(self.winner)
+        except AttributeError:
+            pass
+        except Exception as e:
+            raise e
+
         self.define_net()
         self.define_halves()
         self.define_ball()
