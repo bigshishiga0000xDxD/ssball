@@ -363,6 +363,8 @@ class GameLayout(FloatLayout):
         self.start_thread()
 
     def new_game(self, button = None):
+        reload()
+        #print(window_width, window_height)
         try:
             self.remove_widget(self.restart_button)
             self.remove_widget(self.exit_button)

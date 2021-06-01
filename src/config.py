@@ -3,6 +3,15 @@ from kivy.core.window import Window
 window_width = Window.size[0]
 window_height = Window.size[1]
 
+def reload():
+    global window_width
+    global window_height
+
+    window_width = Window.size[0]
+    window_height = Window.size[1]
+
+    print(window_width, window_height)
+
 nodesize_coef = 1
 ballsize_coef = 1
 net_width_coef = 1
